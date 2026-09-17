@@ -1,0 +1,23 @@
+# ===== 环境变量与密钥（永远不上传）=====
+.env
+.env.*
+*.pem
+*.key
+
+# ===== 依赖目录（体积大且可重新安装）=====
+node_modules/
+
+# ===== 本地数据库文件 =====
+*.sqlite
+*.sqlite3
+*.db
+*.sqlite-wal
+*.sqlite-shm
+
+# ===== 日志 =====
+*.log
+
+# ===== 系统/编辑器杂项 =====
+.DS_Store
+Thumbs.db
+desktop.ini
