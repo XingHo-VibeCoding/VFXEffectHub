@@ -13,3 +13,9 @@
 ## 环境
 - Git 2.55.0.windows.3、Node.js v22.22.2 已装，GitHub 账号已登录
 - 工作区：D:\VibeCoding
+- GitHub 仓库：https://github.com/XingHo-VibeCoding/VFXEffectHub（Public）
+- 网络：Git 推送到 GitHub 需经 Clash 本地代理 7897，凭据通过 Git Credential Manager 弹窗授权
+
+## 项目
+- 当前方向：游戏特效素材收集网站（VFXEffectHub）
+- 技术准备：HTML 占位页、Git 仓库、.gitignore 已就位；Day 7 进入 MVP 功能开发
