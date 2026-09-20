@@ -44,4 +44,4 @@
   - 花瓣有反爬人机验证墙，AI 抓取过不去，用户浏览器正常
 - **付费贴图预览图可用**（2026-09-19 用户实测）：花瓣付费图也能右键另存预览图 → 收录不受「原图是否收费」影响，一律只用免费预览版
 - Day 4 已完成：docs/prd.md 终版（F1–F7 + 总体验收标准 9 条）；顶层分区从「视频/贴图」翻转为「Unity/UE/贴图」，新增二次筛选（游戏名+特效类型）与预设标签起点列表；**上线前每分区预收录 10 条真实内容**（验收标准第 8 条，3 分区合计 30 条）
-- Day 5 待做：技术选型（需落实站内 no-referrer 配置、贴图上传功能方案）
+- Day 5 已完成：docs/TECH_DESIGN.md——技术路线：**纯 HTML/CSS/JS（零依赖）+ data/works.json + localStorage + GitHub Pages**；收录用本地工具页 admin.html；页面规划 index/unity/ue/texture/detail/admin.html；no-referrer 用 meta 标签；本地开发 python -m http.server（fetch 需 http，不能 file://）；localStorage 键名 vfx-likes / vfx-favs / vfx-collections
