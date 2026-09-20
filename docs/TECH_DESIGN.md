@@ -238,3 +238,12 @@ flowchart TD
 | 纯静态无 localStorage 的页面 | 无任何本地存储 | 访客行为完全不留痕 |
 
 **弱点与升级方向**：弱持久化（localStorage）是 MVP 阶段唯一不「稳」的地方，也是 §12 升级路径要从「弱」做到「强」要解决的核心问题——加账号对象 + 后端数据库后，点赞收藏写入服务器，从此与作品数据同级强持久化。
+
+**当前线上状态验证（2026-09-20 实测）**：
+
+| 维度 | URL | 当前状态 | 说明 |
+|---|---|---|---|
+| 仓库本身（数据库 + 历史） | https://github.com/XingHo-VibeCoding/VFXEffectHub | ✅ 已上线 · Public | 7 个 commit 公开可见，文档全世界可读——持久化层已实际生效 |
+| GitHub Pages 站点（网站渲染） | https://xingho-vibecoding.github.io/VFXEffectHub/ | ❌ 暂未启用（404） | 仓库里目前只有 index.html 占位页；按 §9 配置启用 Pages 后，此 URL 才会变成真实网站——Day 7 落实 |
+
+> 这两个 URL 是**两件事**：「仓库 URL」= 让人能直接读你的源文件、commit 历史（数据层）；「Pages URL」= 让人能像普通网站一样浏览页面（渲染层）。MVP 验证「数据持久化」是否生效，看仓库 URL 就够；验证「网站能访问」，要等 Pages 启用。
