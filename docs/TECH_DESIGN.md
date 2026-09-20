@@ -247,3 +247,65 @@ flowchart TD
 | GitHub Pages 站点（网站渲染） | https://xingho-vibecoding.github.io/VFXEffectHub/ | ❌ 暂未启用（404） | 仓库里目前只有 index.html 占位页；按 §9 配置启用 Pages 后，此 URL 才会变成真实网站——Day 7 落实 |
 
 > 这两个 URL 是**两件事**：「仓库 URL」= 让人能直接读你的源文件、commit 历史（数据层）；「Pages URL」= 让人能像普通网站一样浏览页面（渲染层）。MVP 验证「数据持久化」是否生效，看仓库 URL 就够；验证「网站能访问」，要等 Pages 启用。
+
+---
+
+## 14. 数据对象 × 页面 × 接口 映射表
+
+**用途**：随便挑一行，都能说清「它显示在哪、读 / 写谁来管」——这是 Day 5 完成检查第 1 项要求的「指着某张表说出」。
+
+### 14.1 数据对象在哪些页面被读到 / 写入
+
+| 数据对象 | 触发页面（PRD 功能） | 读接口 | 写接口 |
+|---|---|---|---|
+| **作品**（`data/works.json`） | index.html（F1）展示三个分区入口，无需数据<br>unity.html / ue.html / texture.html（F2 瀑布流 / F3 搜索筛选）：按 `sourceType` 过滤渲染 | `fetch data/works.json` | admin.html 收录工具页生成 JSON 片段（手工复制进文件） |
+| **作品**（详情页） | detail.html（F5 详情）：按 `?work=` 的 id 定位作品 | `fetch data/works.json` + 前端按 id 筛选 | 无（详情页只读） |
+| **vfx-likes**（点赞状态） | detail.html（F4 状态按钮）：根据是否在数组里决定按钮状态 | `localStorage.getItem("vfx-likes")` | 点击点赞按钮时 `localStorage.setItem("vfx-likes", JSON.stringify(...))` |
+| **vfx-favs**（收藏状态，红心） | detail.html（F4 状态按钮）：同 likes | `localStorage.getItem("vfx-favs")` | 点击红心按钮时 `localStorage.setItem("vfx-favs", ...)` |
+| **vfx-collections**（收藏夹） | detail.html（F7 收藏入口）：把当前作品加入某个收藏夹 / 列出所有收藏夹供选择 | `localStorage.getItem("vfx-collections")` | 新建收藏夹 / 加入作品时 `localStorage.setItem("vfx-collections", ...)` |
+| **贴图图片**（`images/`） | unity.html / ue.html / texture.html 卡片缩略图（F2）<br>detail.html 大图（F5） | `<img src="images/xxx.webp">` 直接由浏览器拉取 | admin.html 收录时上传文件入库 |
+| **B 站封面**（外链 + no-referrer） | unity.html / ue.html 卡片缩略图（F2）<br>detail.html（F5 视频封面） | `<img src="https://i0.hdslb.com/...">` | 收录时填 `coverUrl` 字段（手工编辑 works.json） |
+
+### 14.2 PRD 功能 × 页面 × 接口 视角
+
+| PRD 功能 | 哪个页面实现 | 用到数据对象 + 接口 |
+|---|---|---|
+| F1 素材来源分区 | index.html | 无数据对象（纯静态 UI + 三个分区页跳转） |
+| F2 瀑布流作品墙 | unity/ue/texture.html | fetch works.json + `<img>` 加载封面/贴图 |
+| F3 搜索 + 二次筛选 | unity/ue/texture.html | 前端 JS 在已 fetch 的 works.json 上做 OR（搜索）+ AND（筛选）过滤 |
+| F4 标题/作者/点赞收藏状态 | detail.html（F4 状态按钮）；unity/ue/texture.html（标题/作者展示） | localStorage 三个键的读写 |
+| F5 作品详情页 | detail.html | fetch works.json 按 id 取 + 视频内嵌 / 贴图大图 + localStorage 写收藏 |
+| F6 手动收录 | admin.html（仅本地使用） | 生成 JSON 片段 + 文件预览 → 用户手工粘贴进 works.json / images/ |
+| F7 自定义收藏夹 | detail.html 收藏入口 | localStorage 读 vfx-collections + 写入 |
+
+### 14.3 每个 MVP 写入 / 读取动作的归宿
+
+| 动作 | 接口 / 本地替代 | 持久化强度 |
+|---|---|---|
+| 访客看到一条作品 | `fetch data/works.json` + `<img>` | 强（仓库托管） |
+| 访客点赞 | `localStorage.setItem("vfx-likes")` | 弱（仅本机） |
+| 访客点红心（收藏状态） | `localStorage.setItem("vfx-favs")` | 弱（仅本机） |
+| 访客新建收藏夹 | `localStorage.setItem("vfx-collections")` | 弱（仅本机） |
+| 访客把作品加入某收藏夹 | `localStorage.setItem("vfx-collections")` 合并 workIds | 弱（仅本机） |
+| 编辑者收录新作品 | admin.html 生成 JSON + 图片文件 → 手动粘贴 works.json + git push | 强（仓库托管） |
+| 编辑者上传新贴图 | admin.html 选文件 → 手动放 images/ + git push | 强（仓库托管） |
+
+> **结论**：所有 MVP 写入 / 读取动作都已有归宿——访客侧走 localStorage（弱持久化），编辑者侧走 Git 仓库（强持久化）；无任何动作落到「未实现」或「无接口」的空缺。
+
+---
+
+## 15. 待决定事项 / Day 7 起逐项拍板
+
+以下事项在 Day 5 仍未完全敲定，列出便于 Day 7 起开发时不踩空：
+
+| 序号 | 待决定事项 | 决策依据 / 待决策点 |
+|---|---|---|
+| TBD-1 | 各分区页顶部入口的视觉样式 | 用户偏好魔法盒类横向 tab（Day 4 用户参考），具体样式 Day 7 设计时定 |
+| TBD-2 | 详情页可分享性：URL 是否始终带 `?work=作品id` | 决定能否把详情页链接发给别人的核心，影响 §5 detail.html 的实现 |
+| TBD-3 | 收录工具页是否支持「批量上传贴图」 | MVP 阶段可只支持单张，影响 §5 admin.html 实现量 |
+| TBD-4 | 预收录 30 条内容（3 分区 × 10）的具体来源分配 | Day 7 启用 Pages 后实际收录时决定（B 站 / 魔法盒 / 花瓣比例） |
+| TBD-5 | 二次筛选的 UI 形态（多选 chip vs 下拉） | Day 7 决定，先按「下拉单选」实现最简版本 |
+| TBD-6 | 收录时上传贴图的预览图来源（花瓣右键另存的图 vs 直接拖入图片） | Day 7 录入流程定稿时决定 |
+| TBD-7 | 瀑布流分页 vs 滚动加载 | MVP 30 条规模两者皆可，先按「全量展示无需分页」起步 |
+
+> Day 7 起每解决一条，把 TBD-N 改写为「已定：……」并移到对应节内即可。
