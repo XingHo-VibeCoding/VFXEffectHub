@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <defs>
+    <radialGradient id="g1" cx="50%" cy="60%" r="55%">
+      <stop offset="0%" stop-color="#ff7a18" stop-opacity="1"/>
+      <stop offset="55%" stop-color="#ff3d00" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#5d1a00" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="g2" cx="50%" cy="80%" r="35%">
+      <stop offset="0%" stop-color="#fff176" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#fff176" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="400" height="300" fill="#1a1a1a"/>
+  <ellipse cx="200" cy="200" rx="180" ry="120" fill="url(#g1)"/>
+  <ellipse cx="200" cy="230" rx="100" ry="50" fill="url(#g2)"/>
+  <text x="200" y="280" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#fff" opacity="0.7">火焰序列帧 · 测试图</text>
+</svg>

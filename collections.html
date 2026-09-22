@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="no-referrer">
+  <title>我的收藏夹 · VFXEffectHub</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="back-link" href="index.html">← 返回首页</a>
+      <a class="site-title" href="index.html">VFXEffectHub</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <h2 class="section-title">我的收藏夹</h2>
+    <p class="section-desc">保存在当前浏览器（换设备或清缓存后不保留）</p>
+
+    <div class="collection-create">
+      <input id="newCollectionName" type="text" placeholder="新收藏夹名字，如「刀光参考」…">
+      <button id="createCollectionBtn" class="btn btn--primary" type="button">新建收藏夹</button>
+    </div>
+    <p id="createMsg" class="collection-msg"></p>
+
+    <div id="collectionList"></div>
+  </main>
+
+  <footer class="site-footer">
+    <p>作品由编辑者收录 · 收录入口不对公众开放</p>
+  </footer>
+
+  <script src="js/storage.js"></script>
+  <script src="js/collections.js"></script>
+</body>
+</html>

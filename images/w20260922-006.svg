@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <defs>
+    <linearGradient id="blade" x1="0%" y1="50%" x2="100%" y2="50%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="30%" stop-color="#ffffff" stop-opacity="0.95"/>
+      <stop offset="70%" stop-color="#7ecbff" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#7ecbff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="300" fill="#0d0f1a"/>
+  <path d="M 60 150 Q 200 80 340 150 Q 200 220 60 150 Z" fill="url(#blade)" opacity="0.85"/>
+  <path d="M 60 150 Q 200 90 340 150" stroke="#ffffff" stroke-width="3" fill="none" opacity="0.9"/>
+  <text x="200" y="280" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#7ecbff" opacity="0.7">刀光 alpha 通道 · 测试图</text>
+</svg>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="no-referrer">
+  <title>收录工具 · VFXEffectHub</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="back-link" href="index.html">← 返回首页</a>
+      <a class="site-title" href="index.html">VFXEffectHub</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <h2 class="section-title">收录工具</h2>
+    <p class="section-desc">仅在本地使用 · 不对外公开 · 收录入口：把生成的记录粘贴到 <code>data/works.json</code>，上传贴图到 <code>images/</code>，然后 git push</p>
+
+    <form id="adminForm" class="admin-form" onsubmit="return false;">
+      <fieldset class="admin-fieldset">
+        <legend>1. 来源类型 *</legend>
+        <label class="radio"><input type="radio" name="sourceType" value="unity"> Unity（视频）</label>
+        <label class="radio"><input type="radio" name="sourceType" value="ue"> UE（视频）</label>
+        <label class="radio"><input type="radio" name="sourceType" value="texture"> 贴图（图片）</label>
+      </fieldset>
+
+      <fieldset class="admin-fieldset">
+        <legend>2. 标题 *</legend>
+        <input type="text" id="title" required placeholder="例如：鸣潮·角色技能刀光展示">
+      </fieldset>
+
+      <fieldset class="admin-fieldset">
+        <legend>3. 来源链接 *</legend>
+        <input type="url" id="sourceUrl" required placeholder="https://www.bilibili.com/video/... 或 https://huaban.com/pins/...">
+      </fieldset>
+
+      <fieldset class="admin-fieldset" id="coverFieldset">
+        <legend>4. 封面图链接（视频类选填）</legend>
+        <input type="url" id="coverUrl" placeholder="视频封面图 URL（B 站可外嵌，需站内 no-referrer）">
+        <p class="hint">不填则瀑布流用默认占位图。</p>
+      </fieldset>
+
+      <fieldset class="admin-fieldset" id="imageFileFieldset" hidden>
+        <legend>4. 贴图文件名（贴图类必填）</legend>
+        <input type="text" id="imageFile" placeholder="例如：w20260922-007.webp">
+        <p class="hint">先把原图右键「图片另存为」存到本地，按规则 A 命名为 <code>{id}.{扩展名}</code>，再手动移动到 <code>images/</code> 目录；最终在 <code>works.json</code> 的 <code>imageFile</code> 字段填入文件名（不含路径）。</p>
+      </fieldset>
+
+      <fieldset class="admin-fieldset">
+        <legend>5. 作者</legend>
+        <input type="text" id="author" placeholder="UP 主 / 作者名 / 留空">
+      </fieldset>
+
+      <fieldset class="admin-fieldset">
+        <legend>6. 标签（可选）</legend>
+        <p class="hint">勾选预设标签，或在「自定义标签」里用逗号分隔输入；标签是「想要能筛就填」的进阶操作，不填也能入库。</p>
+        <div class="tag-group">
+          <strong>游戏：</strong>
+          <label class="checkbox"><input type="checkbox" value="原神"> 原神</label>
+          <label class="checkbox"><input type="checkbox" value="鸣潮"> 鸣潮</label>
+          <label class="checkbox"><input type="checkbox" value="绝区零"> 绝区零</label>
+          <label class="checkbox"><input type="checkbox" value="崩坏：星穹铁道"> 崩坏：星穹铁道</label>
+        </div>
+        <div class="tag-group">
+          <strong>引擎/形态：</strong>
+          <label class="checkbox"><input type="checkbox" value="Unity"> Unity</label>
+          <label class="checkbox"><input type="checkbox" value="UE"> UE</label>
+          <label class="checkbox"><input type="checkbox" value="贴图"> 贴图</label>
+        </div>
+        <div class="tag-group">
+          <strong>自定义标签：</strong>
+          <input type="text" id="customTags" placeholder="多个标签用逗号分隔，如：刀光,溶解,序列帧">
+        </div>
+      </fieldset>
+
+      <fieldset class="admin-fieldset">
+        <legend>7. 生成收录条目</legend>
+        <button type="button" id="generateBtn" class="btn btn--primary">生成 JSON</button>
+        <button type="button" id="copyBtn" class="btn" disabled>复制到剪贴板</button>
+        <p id="adminMsg" class="admin-msg"></p>
+      </fieldset>
+
+      <fieldset class="admin-fieldset">
+        <legend>输出</legend>
+        <textarea id="output" rows="6" readonly placeholder="点「生成 JSON」后这里会出现一条作品记录…"></textarea>
+        <p class="hint">复制后粘贴到 <code>data/works.json</code> 数组末尾；贴图类需要把图片文件放进 <code>images/</code> 目录；最后 <code>git add → commit → push</code>。</p>
+      </fieldset>
+    </form>
+  </main>
+
+  <footer class="site-footer">
+    <p>作品由编辑者收录 · 收录入口不对公众开放</p>
+  </footer>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>

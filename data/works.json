@@ -1,0 +1,64 @@
+{
+  "works": [
+    {
+      "id": "w20260922-001",
+      "sourceType": "unity",
+      "title": "Unity 粒子系统火焰特效示例",
+      "sourceUrl": "https://www.bilibili.com/video/BV1example001",
+      "author": "测试作者A",
+      "coverUrl": "https://picsum.photos/seed/unityfire/400/300",
+      "tags": ["Unity", "粒子", "火焰", "原神"],
+      "createdAt": "2026-09-22"
+    },
+    {
+      "id": "w20260922-002",
+      "sourceType": "unity",
+      "title": "Unity Shader Graph 刀光溶解",
+      "sourceUrl": "https://www.bilibili.com/video/BV1example002",
+      "author": "测试作者B",
+      "coverUrl": "https://picsum.photos/seed/unityblade/400/300",
+      "tags": ["Unity", "Shader", "刀光", "鸣潮"],
+      "createdAt": "2026-09-22"
+    },
+    {
+      "id": "w20260922-003",
+      "sourceType": "ue",
+      "title": "UE5 Niagara 战斗元素爆发",
+      "sourceUrl": "https://www.bilibili.com/video/BV1example003",
+      "author": "测试作者C",
+      "coverUrl": "https://picsum.photos/seed/ueniagara/400/300",
+      "tags": ["UE", "Niagara", "元素", "绝区零"],
+      "createdAt": "2026-09-22"
+    },
+    {
+      "id": "w20260922-004",
+      "sourceType": "ue",
+      "title": "UE5 顶点偏移溶解材质",
+      "sourceUrl": "https://www.bilibili.com/video/BV1example004",
+      "author": "测试作者D",
+      "coverUrl": "https://picsum.photos/seed/uevert/400/300",
+      "tags": ["UE", "材质", "溶解", "崩坏：星穹铁道"],
+      "createdAt": "2026-09-22"
+    },
+    {
+      "id": "w20260922-005",
+      "sourceType": "texture",
+      "title": "火焰序列帧 8 帧",
+      "sourceUrl": "https://www.bilibili.com/video/BV1example005",
+      "author": "测试作者E",
+      "imageFile": "images/w20260922-005.svg",
+      "tags": ["贴图", "序列帧", "火焰", "原神"],
+      "createdAt": "2026-09-22"
+    },
+    {
+      "id": "w20260922-006",
+      "sourceType": "texture",
+      "title": "刀光 alpha 通道贴图",
+      "sourceUrl": "https://www.bilibili.com/video/BV1example006",
+      "author": "测试作者F",
+      "imageFile": "images/w20260922-006.svg",
+      "tags": ["贴图", "刀光", "alpha", "鸣潮"],
+      "createdAt": "2026-09-22"
+    }
+  ]
+}
