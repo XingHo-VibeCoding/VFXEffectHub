@@ -43,6 +43,6 @@
   - 花瓣图片：地址带 auth_key **短时效签名（当天过期）**，裸地址 403 → **贴图外嵌不可行**，贴图收录必须**把图片文件存进本项目**（右键另存→上传）
   - 花瓣有反爬人机验证墙，AI 抓取过不去，用户浏览器正常
 - **付费贴图预览图可用**（2026-09-19 用户实测）：花瓣付费图也能右键另存预览图 → 收录不受「原图是否收费」影响，一律只用免费预览版
-- Day 4 已完成：docs/prd.md 终版（F1–F7 + 总体验收标准 9 条）；顶层分区从「视频/贴图」翻转为「Unity/UE/贴图」，新增二次筛选（游戏名+特效类型）与预设标签起点列表；**上线前每分区预收录 10 条真实内容**（验收标准第 8 条，3 分区合计 30 条）
+- Day 4 已完成：docs/prd.md 终版（F1–F7 + 总体验收标准 9 条）；顶层分区从「视频/贴图」翻转为「Unity/UE/贴图」，新增二次筛选（游戏名+特效类型）与预设标签起点列表；**上线前每分区预收录 5 条真实内容**（验收标准第 8 条，3 分区合计 15 条，Day 7 减半修订）
 - Day 5 已完成：docs/TECH_DESIGN.md——技术路线：**纯 HTML/CSS/JS（零依赖）+ data/works.json + localStorage + GitHub Pages**；收录用本地工具页 admin.html；页面规划 index/unity/ue/texture/detail/admin.html；no-referrer 用 meta 标签；本地开发 python -m http.server（fetch 需 http，不能 file://）；localStorage 键名 vfx-likes / vfx-favs / vfx-collections
 - Day 6 已完成：AGENTS.md 末尾新增「八、我的个人规则」三条——**A 贴图命名存放**（images/ + {id}.{ext} 严格对应，防孤儿记录）、**B http://localhost 验证**（禁 file:// 双击，防 fetch 假成功）、**C 中文优先**（UI/文档/对话中文，技术名词保留英文）；原有 7 节基线规则一字未动
