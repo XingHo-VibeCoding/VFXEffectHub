@@ -4,40 +4,44 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="referrer" content="no-referrer">
-  <title>VFXEffectHub · 游戏特效素材参考收集</title>
+  <title>VFXEffectHub · 主视图</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
-  <header class="site-header">
-    <h1 class="site-title">VFXEffectHub</h1>
-    <p class="site-subtitle">游戏特效素材参考收集</p>
+<body data-page="home">
+  <header class="site-header site-header--home">
+    <div class="brand">
+      <h1 class="site-title">VFXEffectHub</h1>
+      <p class="site-subtitle">游戏特效素材参考收集 · Unity / UE / 贴图</p>
+    </div>
   </header>
 
-  <main class="container">
-    <h2 class="section-title">选择一个分区开始</h2>
-    <p class="section-desc">按素材来源划分 · Unity 与 UE 区收录视频类作品，贴图区收录贴图类作品</p>
+  <nav class="tabs" role="tablist" aria-label="分区切换">
+    <button class="tab is-active" role="tab" aria-selected="true" data-tab="unity">Unity</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="ue">UE</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="texture">贴图</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="collections">我的收藏</button>
+  </nav>
 
-    <div class="entry-grid">
-      <a class="entry-card" href="unity.html">
-        <h3>Unity</h3>
-        <p>Unity 引擎相关的视频特效参考</p>
-        <span class="entry-tag">视频类</span>
-      </a>
-      <a class="entry-card" href="ue.html">
-        <h3>UE</h3>
-        <p>Unreal Engine 相关的视频特效参考</p>
-        <span class="entry-tag">视频类</span>
-      </a>
-      <a class="entry-card" href="texture.html">
-        <h3>贴图</h3>
-        <p>序列帧、贴图、材质参考</p>
-        <span class="entry-tag">图片类</span>
-      </a>
+  <main class="container">
+    <div class="toolbar toolbar--home" role="toolbar" aria-label="筛选工具栏">
+      <input id="searchInput" type="search" class="toolbar__search" placeholder="搜索标题或标签…" aria-label="搜索">
+      <select id="gameFilter" class="toolbar__select" aria-label="按游戏名筛选">
+        <option value="">游戏名：全部</option>
+      </select>
+      <select id="effectFilter" class="toolbar__select" aria-label="按特效类型筛选">
+        <option value="">特效类型：全部</option>
+      </select>
+      <button id="errorBtn" type="button" class="btn btn--ghost" aria-label="模拟错误态">模拟错误</button>
     </div>
+
+    <div id="statusArea" class="status" aria-live="polite"></div>
+    <section id="grid" class="grid" aria-label="作品瀑布流"></section>
   </main>
 
   <footer class="site-footer">
     <p>作品由编辑者收录 · 收录入口不对公众开放</p>
   </footer>
+
+  <script src="js/home.js"></script>
 </body>
 </html>
