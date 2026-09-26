@@ -59,7 +59,7 @@ a:hover { text-decoration: underline; }
   color: #fff;
 }
 .nav-link--active:hover { background: #1a5dc8; color: #fff; }
-.nav-link--muted { color: #8b949e; }
+.nav-link--muted { color: #57606a; }
 
 /* 主容器 */
 .container {
@@ -77,11 +77,11 @@ a:hover { text-decoration: underline; }
   font-size: 14px;
 }
 
-/* 搜索 + 二次筛选工具栏（Step 3） */
+/* 搜索 + 二次筛选工具栏（Step 3；Day 9 与首页统一 gap=12px） */
 .toolbar {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 12px;
   margin-bottom: 20px;
 }
 .toolbar input[type="search"] {
@@ -154,7 +154,7 @@ a:hover { text-decoration: underline; }
 .empty-hint {
   grid-column: 1 / -1;
   text-align: center;
-  color: #8b949e;
+  color: #57606a;
   padding: 48px 0;
 }
 
@@ -196,7 +196,7 @@ a:hover { text-decoration: underline; }
 .card-author {
   margin: 0 12px 12px;
   font-size: 12px;
-  color: #8b949e;
+  color: #57606a;
 }
 
 /* ============ 详情页（Step 4 · F5） ============ */
@@ -218,8 +218,8 @@ a:hover { text-decoration: underline; }
   margin: 0 auto;
 }
 .detail-hint {
-  color: #8b949e;
-  font-size: 13px;
+  color: #57606a;
+  font-size: 12px;
   margin: -8px 0 16px;
 }
 .detail-title {
@@ -239,7 +239,7 @@ a:hover { text-decoration: underline; }
   background: #eef2ff;
   color: #1f6feb;
   border-radius: 12px;
-  font-size: 13px;
+  font-size: 12px;
 }
 .detail-source {
   display: inline-block;
@@ -257,26 +257,11 @@ a:hover { text-decoration: underline; }
   gap: 8px;
   margin: 24px 0;
 }
-.btn {
-  padding: 8px 18px;
-  background: #fff;
-  border: 1px solid #d0d7de;
-  border-radius: 6px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: border-color 0.15s, background 0.15s;
-}
-.btn:hover { border-color: #1f6feb; }
+/* 点亮态（点赞/收藏激活） */
 .btn--active {
   background: #fff8e6;
   border-color: #f0a825;
 }
-.btn--primary {
-  background: #1f6feb;
-  border-color: #1f6feb;
-  color: #fff;
-}
-.btn--primary:hover { background: #1a5dc8; }
 
 /* 加入收藏夹区块（F7） */
 .collection-box {
@@ -313,7 +298,7 @@ a:hover { text-decoration: underline; }
   font-size: 13px;
   min-height: 18px;
 }
-.collection-link-hint { margin: 8px 0 0; font-size: 13px; }
+.collection-link-hint { margin: 8px 0 0; font-size: 12px; }
 
 /* 红心对称联动提示（Day 7 拍板） */
 .fav-msg {
@@ -355,9 +340,9 @@ a:hover { text-decoration: underline; }
   gap: 10px;
 }
 .collection-item-count {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: normal;
-  color: #8b949e;
+  color: #57606a;
 }
 .wall--in-collection {
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -369,7 +354,7 @@ a:hover { text-decoration: underline; }
 .site-footer {
   padding: 24px;
   text-align: center;
-  color: #8b949e;
+  color: #57606a;
   font-size: 12px;
   border-top: 1px solid #eaecef;
   margin-top: 48px;
@@ -521,27 +506,33 @@ a:hover { text-decoration: underline; }
 }
 .toolbar__select:focus { outline: none; border-color: #1f6feb; }
 
-/* 通用按钮（用于状态区的「重试 / 清除筛选」） */
+/* 通用按钮（全站唯一一套：首页状态区 + 详情页动作按钮共用） */
 .btn {
   padding: 8px 16px;
-  border: 1px solid transparent;
+  background: #fff;
+  border: 1px solid #d0d7de;
   border-radius: 6px;
   font: inherit;
   font-size: 14px;
+  color: #1f2328;
   cursor: pointer;
   transition: background 0.15s, border-color 0.15s;
 }
+.btn:hover { border-color: #1f6feb; }
+.btn:active { background: #f0f1f3; }
 .btn--primary {
   background: #1f6feb;
+  border-color: #1f6feb;
   color: #fff;
 }
-.btn--primary:hover { background: #1a5dc8; }
+.btn--primary:hover { background: #1a5dc8; border-color: #1a5dc8; }
+.btn--primary:active { background: #174ea6; }
 .btn--ghost {
   background: #fff;
   color: #1f2328;
   border-color: #d0d7de;
 }
-.btn--ghost:hover { background: #f6f8fa; }
+.btn--ghost:hover { background: #f6f8fa; border-color: #1f6feb; }
 
 /* 状态区（loading / empty / error 三态共用 box，状态直接 400） */
 .status { margin: 8px 0 16px; min-height: 1px; }
@@ -615,13 +606,13 @@ a:hover { text-decoration: underline; }
 .card__author {
   margin: 0 0 8px;
   font-size: 12px;
-  color: #8b949e;
+  color: #57606a;
 }
 .card__tags { display: flex; flex-wrap: wrap; gap: 4px; }
 .chip {
   display: inline-block;
   padding: 2px 8px;
-  font-size: 11px;
+  font-size: 12px;
   color: #57606a;
   background: #f0f1f3;
   border-radius: 10px;
@@ -644,11 +635,24 @@ a:hover { text-decoration: underline; }
   100% { background-position: -200% 0; }
 }
 
-/* 移动端：品牌区左对齐 + tabs 横向滚动已自带 */
+/* 移动端：品牌区左对齐 + tabs 横向滚动已自带 + 触控目标 ≥44px */
 @media (max-width: 560px) {
   .site-header--home { padding: 20px 16px 12px; }
   .tabs { padding: 0 16px; }
   .container { padding: 24px 16px; }
   .toolbar--home { gap: 8px; }
-  .toolbar__search, .toolbar__select { font-size: 14px; }
+  .toolbar__search, .toolbar__select { font-size: 14px; min-height: 44px; }
+  .btn { min-height: 44px; }
+  .tab { padding: 14px 16px; }
+}
+
+/* 键盘聚焦态（Tab 导航时可见焦点框，鼠标点击不显示） */
+.tab:focus-visible,
+.btn:focus-visible,
+.toolbar__search:focus-visible,
+.toolbar__select:focus-visible,
+.toolbar input[type="search"]:focus-visible,
+.toolbar select:focus-visible {
+  outline: 2px solid #1f6feb;
+  outline-offset: 2px;
 }

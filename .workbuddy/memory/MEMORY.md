@@ -7,6 +7,7 @@
 - 每天用户发「今日任务清单」，清单即当日唯一任务范围，不做清单外工作
 - 一次只做一个板块，做完停下等「进入下一板块」指令
 - 人机分工：账号注册/截图等人工操作只给指引；生成内容等用户明确说了再做
+- **`git push` 归属（Day 8 拍板）**：默认由用户在自己 Git Bash 终端执行，保留「亲眼复核发布内容」环节；AI 仅在用户明确指示或 push 卡住时，才用 `git -c credential.helper=manager -c credential.helper=wincred push` 绕过 Git Credential Manager 的交互选择弹窗（sandbox 没有 /dev/tty 弹不出来）
 - 验证必须用户亲眼可确认；commit 格式 `Day X｜一句话说明`，一天全部完成并核对后才提交
 - 详见 D:\VibeCoding\AGENTS.md
 
@@ -48,3 +49,7 @@
 - Day 6 已完成：AGENTS.md 末尾新增「八、我的个人规则」三条——**A 贴图命名存放**（images/ + {id}.{ext} 严格对应，防孤儿记录）、**B http://localhost 验证**（禁 file:// 双击，防 fetch 假成功）、**C 中文优先**（UI/文档/对话中文，技术名词保留英文）；原有 7 节基线规则一字未动
 - Day 7 已完成：MVP 五步全部落地——Step 1 页面骨架（index 重写三分区入口 + unity/ue/texture + css）；Step 2 数据瀑布流（works.json 6 条测试数据 + common.js + images/ 2 张 SVG 占位，规则 A 命名）；Step 3 搜索+二次筛选（标题/标签任一命中 OR + 游戏名/特效类型 AND 叠加 + 空结果提示）；Step 4 详情页+点赞收藏+收藏夹（storage.js / detail.js / collections.js，XSS 转义、失效 id 过滤）；Step 5 admin.html 收录工具页 + RUN.md 重写（收录流程 5 步 + Pages 启用指引）。**收藏联动四规则**（开发期拍板，已补进 PRD F4/F7）：默认夹自动建（删后不复活）、进夹即收藏、取消红心从所有夹移除、点红心不选夹自动入默认夹
 - Day 7 踩坑记录：Windows `python` 命令被 Microsoft Store 别名静默拦截 → 必须用完整路径 `C:\Users\33935\.workbuddy\binaries\python\versions\3.13.12\python.exe -m http.server 8000`；启动前必须 `cd D:\VibeCoding`（否则根目录错）；浏览器缓存旧页面 → 验证前 Ctrl+Shift+R 强刷。均已写进 docs/RUN.md
+- Day 8 已完成：主视图四状态改造（**今日一问答案：错误态最易被忽略；用户回答用「文字」区分 empty/error**）——首页（index.html）从三分区入口重写为四 tab 主视图（Unity/UE/贴图/我的收藏），js/home.js 内嵌 6 条 mock 数据 + state 机 + 加载/成功/空/错误四状态渲染 + tab/搜索/二次筛选/模拟错误交互，css/style.css 追加 134 行（.tabs/.toolbar--home/.btn/.status 四态/.grid 瀑布流/.card/.chip/.skeleton-card + 移动端适配）+ 修掉 tab 滚动溢出点；板块 ②③验证全过（控制台仅一条 `favicon.ico 404` 无害）；第 1 周周验证日表单已按真实数据填写（15 commits + 仓库公网 + 本地截图）
+- Day 8 踩坑记录：① Edge 桌面端 `overflow-x: auto` 出现滚动溢出指示三点 → 加 `scrollbar-width:none` 等隐藏；② Console 默认禁止外部粘贴 → 先手打「允许粘贴」回车解锁；③ 用户误在 unity.html 上验证（应为首页 `http://localhost:8000/`）；④ GCM `helper-selector` 弹窗失败（已沉淀进上方协作规则）
+- Day 9 已完成：设计规则审查与修复——用 6 条带阈值的设计规则（对比度 4.5:1 / 8px 间距节奏 / 左边线对齐 / 字号阶梯 / 按钮四态 / 44px 触控+无横向溢出）审查 index.html + style.css，修掉 5 处：①浅灰 #8b949e→#57606a 全站 7 处（对比度 3:1→7:1）；②合并重复定义的 .btn/.btn--primary（Day 8 透明边框版曾覆盖 Day 7 版，致详情页按钮边框消失）；③移动端 560px 下按钮/搜索/下拉 min-height 44px；④统一 :focus-visible 键盘聚焦框；⑤工具栏 gap 8→12、常驻辅助字号统一 12px（动态消息保留 13px）。**每日一问答案：用户选对比度**——对「像正经产品」影响最大。不修留档：分区页与首页两套卡片类名（属大改版面，今日不做）
+- Day 9 踩坑记录：① 用户开成 PowerShell 而非 Git Bash（PowerShell 需 `&` 调用运算符 + 反斜杠路径；Git Bash 用 `/d/` 正斜杠）；② Git Bash 不支持 Ctrl+V，用右键→Paste 或 Shift+Insert；③ 本地服务器每次终端关闭即停，需重新起
