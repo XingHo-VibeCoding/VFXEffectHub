@@ -437,23 +437,29 @@ a:hover { text-decoration: underline; }
 /* Day 8 主视图：四状态 + 瀑布流 + tabs + 工具栏                  */
 /* ============================================================ */
 
-/* 顶部品牌区（主视图变体：更紧凑，给 tab 留位置） */
+/* 顶部品牌区（主视图变体：与 tabs 拉开呼吸空间） */
 .site-header--home {
-  padding: 32px 24px 20px;
+  padding: 32px 24px 24px;
   text-align: left;
 }
 .site-header--home .brand { max-width: 1100px; margin: 0 auto; }
 
-/* 分区 tabs（横向，选中态用蓝色填充） */
+/* 分区 tabs（横向，选中态用蓝色填充；独立灰底条 + 全端吸顶） */
 .tabs {
+  position: sticky;
+  top: 0;
+  z-index: 100;
   max-width: 1100px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 8px 24px 0;
+  height: 56px;
   display: flex;
   gap: 4px;
   overflow-x: auto;
-  border-bottom: 1px solid #eaecef;
-  background: #fff;
+  box-sizing: border-box;
+  border-top: 1px solid #eaecef;
+  border-bottom: 1px solid #d0d7de;
+  background: #f6f8fa;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
@@ -461,7 +467,10 @@ a:hover { text-decoration: underline; }
 .tab {
   border: none;
   background: transparent;
-  padding: 12px 18px;
+  height: 48px;
+  padding: 0 18px;
+  display: inline-flex;
+  align-items: center;
   font: inherit;
   font-size: 14px;
   color: #57606a;
@@ -477,13 +486,20 @@ a:hover { text-decoration: underline; }
   font-weight: 600;
 }
 
-/* 主视图工具栏（搜索 + 游戏名 + 特效类型 + 模拟错误） */
+/* 主视图工具栏（搜索 + 游戏名 + 特效类型 + 模拟错误；吸顶在 tabs 下方） */
 .toolbar--home {
+  position: sticky;
+  top: 56px;
+  z-index: 99;
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
   align-items: center;
   margin-bottom: 24px;
+  padding: 16px;
+  background: #fff;
+  border: 1px solid #d0d7de;
+  border-radius: 8px;
 }
 .toolbar__search {
   flex: 1 1 240px;
@@ -635,15 +651,15 @@ a:hover { text-decoration: underline; }
   100% { background-position: -200% 0; }
 }
 
-/* 移动端：品牌区左对齐 + tabs 横向滚动已自带 + 触控目标 ≥44px */
+/* 移动端：品牌区左对齐 + tabs 横向滚动 + 触控目标 ≥44px + 吸顶已由全局规则处理 */
 @media (max-width: 560px) {
-  .site-header--home { padding: 20px 16px 12px; }
-  .tabs { padding: 0 16px; }
+  .site-header--home { padding: 20px 16px 16px; }
+  .tabs { padding: 8px 16px 0; }
+  .tab { padding: 0 16px; }
+  .toolbar--home { gap: 8px; padding: 12px; }
   .container { padding: 24px 16px; }
-  .toolbar--home { gap: 8px; }
   .toolbar__search, .toolbar__select { font-size: 14px; min-height: 44px; }
   .btn { min-height: 44px; }
-  .tab { padding: 14px 16px; }
 }
 
 /* 键盘聚焦态（Tab 导航时可见焦点框，鼠标点击不显示） */
