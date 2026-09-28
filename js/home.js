@@ -31,7 +31,7 @@
   };
 
   // ---------- DOM ----------
-  var tabBtns, searchInput, gameFilter, effectFilter, errorBtn, statusArea, grid;
+  var tabBtns, searchInput, gameFilter, effectFilter, refreshBtn, errorBtn, statusArea, grid;
 
   // ---------- 工具 ----------
   function escapeHtml(s) {
@@ -221,6 +221,19 @@
         render();
       });
     }
+    if (refreshBtn) {
+      refreshBtn.addEventListener('click', function () {
+        // 只刷新内容：保留当前搜索/筛选，仅退出错误态并重新渲染
+        state.forceError = false;
+        if (errorBtn) errorBtn.textContent = '模拟错误';
+        state.status = 'loading';
+        render();
+        setTimeout(function () {
+          state.status = 'success';
+          render();
+        }, 500);
+      });
+    }
     if (errorBtn) {
       errorBtn.addEventListener('click', function () {
         state.forceError = !state.forceError;
@@ -236,6 +249,7 @@
     searchInput = document.getElementById('searchInput');
     gameFilter = document.getElementById('gameFilter');
     effectFilter = document.getElementById('effectFilter');
+    refreshBtn = document.getElementById('refreshBtn');
     errorBtn = document.getElementById('errorBtn');
     statusArea = document.getElementById('statusArea');
     grid = document.getElementById('grid');
