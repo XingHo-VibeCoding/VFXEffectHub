@@ -55,7 +55,11 @@
       '<h1 class="detail-title">' + escapeHtml(work.title) + '</h1>' +
       '<p class="detail-meta">作者：' + escapeHtml(work.author || '佚名') + ' · 收录于 ' + escapeHtml(work.createdAt || '') + '</p>' +
       '<div class="detail-tags">' + tagsHtml + '</div>' +
-      '<p><a class="detail-source" href="' + escapeAttr(work.sourceUrl || '#') + '" target="_blank" rel="noopener noreferrer">查看来源 ↗</a></p>' +
+      '<div class="detail-source-row">' +
+        '<a class="detail-source" href="' + escapeAttr(work.sourceUrl || '#') + '" target="_blank" rel="noopener noreferrer">查看来源 ↗</a>' +
+        '<button id="copyLinkBtn" class="btn btn--ghost" type="button">📋 复制链接</button>' +
+      '</div>' +
+      '<p id="copyMsg" class="fav-msg"></p>' +
       '<div class="detail-actions">' +
         '<button id="likeBtn" class="btn" type="button">👍 点赞</button>' +
         '<button id="favBtn" class="btn" type="button">❤ 收藏</button>' +
@@ -120,6 +124,59 @@
         } else {
           setFavMsg('已点亮红心', 'info');
         }
+      }
+    });
+
+    // ---------- 复制来源链接（Day 11：成功反馈 + 防重复 + 失败提示） ----------
+    var copyBtn = document.getElementById('copyLinkBtn');
+    var copyMsg = document.getElementById('copyMsg');
+    var copyTimer = null;
+
+    function setCopyMsg(text, type) {
+      copyMsg.textContent = text;
+      copyMsg.className = 'fav-msg' + (type ? ' fav-msg--' + type : '');
+    }
+
+    function resetCopyBtn() {
+      clearTimeout(copyTimer);
+      copyBtn.disabled = false;
+      copyBtn.textContent = '📋 复制链接';
+      copyBtn.classList.remove('copy-btn--ok');
+    }
+
+    copyBtn.addEventListener('click', function () {
+      if (copyBtn.disabled) return; // 处理中再点：忽略，防重复提交
+
+      var url = work.sourceUrl;
+      if (!url) {
+        setCopyMsg('暂无来源链接可复制', 'error');
+        return;
+      }
+
+      // 进入处理中：锁按钮，阻止连点
+      copyBtn.disabled = true;
+      copyBtn.textContent = '复制中…';
+      setCopyMsg('');
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(function () {
+          copyBtn.disabled = false;
+          copyBtn.textContent = '✓ 已复制';
+          copyBtn.classList.add('copy-btn--ok');
+          setCopyMsg('已复制到剪贴板', 'ok');
+          copyTimer = setTimeout(function () {
+            copyBtn.textContent = '📋 复制链接';
+            copyBtn.classList.remove('copy-btn--ok');
+            setCopyMsg('');
+          }, 1500);
+        }).catch(function () {
+          resetCopyBtn();
+          setCopyMsg('复制失败，请手动选中下方链接复制', 'error');
+        });
+      } else {
+        // file:// 等非安全上下文无 Clipboard API
+        resetCopyBtn();
+        setCopyMsg('复制失败，请手动选中下方链接复制', 'error');
       }
     });
 

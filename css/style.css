@@ -250,6 +250,17 @@ a:hover { text-decoration: underline; }
   font-size: 14px;
 }
 .detail-source:hover { background: #1a5dc8; text-decoration: none; }
+/* 来源链接 + 复制按钮并排（Day 11） */
+.detail-source-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.copy-btn--ok {
+  color: #1a7f37;
+  border-color: #2da44e;
+}
 
 /* 状态式按钮（F4：无数字，只有点亮/熄灭状态） */
 .detail-actions {
@@ -309,6 +320,8 @@ a:hover { text-decoration: underline; }
 }
 .fav-msg--warn { color: #bf8700; }
 .fav-msg--info { color: #57606a; }
+.fav-msg--ok { color: #1a7f37; }
+.fav-msg--error { color: #cf222e; }
 
 /* ============ 收藏夹页（Step 4 · F7） ============ */
 .collection-create {
