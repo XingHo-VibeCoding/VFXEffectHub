@@ -1,6 +1,6 @@
-// js/common.js · 公共逻辑：加载作品数据 + 按分区过滤 + 搜索/二次筛选 + 渲染瀑布流
-// Step 2：F1 分区显示 + F2 瀑布流
-// Step 3：F3 搜索（标题/标签任一命中即匹配）+ 二次筛选（游戏名/特效类型，可勾可不勾）
+// js/common.js · 公共逻辑：分区页四态（加载/成功/空/错误）+ 搜索/二次筛选 + 瀑布流
+// Day 7 初版：F1 分区显示 + F2 瀑布流 + F3 搜索/筛选
+// Day 13 补齐：loading 骨架屏 / empty 状态框+清除筛选 / error 状态框+重试
 
 // 预设：游戏名（PRD 拍板起点列表）
 var GAME_PRESETS = ['原神', '鸣潮', '绝区零', '崩坏：星穹铁道'];
@@ -17,26 +17,32 @@ var ENGINE_TAGS = ['Unity', 'UE', '贴图'];
   var typeFilter = document.getElementById('typeFilter');
 
   var sectionWorks = []; // 当前分区的全部作品
+  var state = { status: 'loading' }; // 'loading' | 'success' | 'error'
 
-  // ---------- 数据加载 ----------
-  fetch('data/works.json')
-    .then(function (res) {
-      if (!res.ok) throw new Error('HTTP ' + res.status);
-      return res.json();
-    })
-    .then(function (data) {
-      // 兼容两种顶层结构：[{...}] 或 {works: [{...}]}
-      var all = Array.isArray(data) ? data : (data.works || []);
-      sectionWorks = all.filter(function (w) { return w.sourceType === section; });
+  // ---------- 数据加载（可重试） ----------
+  function load() {
+    state.status = 'loading';
+    render();
+    fetch('data/works.json')
+      .then(function (res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.json();
+      })
+      .then(function (data) {
+        // 兼容两种顶层结构：[{...}] 或 {works: [{...}]}
+        var all = Array.isArray(data) ? data : (data.works || []);
+        sectionWorks = all.filter(function (w) { return w.sourceType === section; });
 
-      buildGameFilterOptions();
-      buildTypeFilterOptions();
-      bindEvents();
-      render();
-    })
-    .catch(function (err) {
-      wall.innerHTML = '<p class="empty-hint">作品加载失败：' + escapeHtml(err.message) + '</p>';
-    });
+        buildGameFilterOptions();
+        buildTypeFilterOptions();
+        state.status = 'success';
+        render();
+      })
+      .catch(function () {
+        state.status = 'error';
+        render();
+      });
+  }
 
   // ---------- 筛选逻辑 ----------
 
@@ -68,9 +74,10 @@ var ENGINE_TAGS = ['Unity', 'UE', '贴图'];
     });
   }
 
-  // ---------- 游戏名下拉：预设起点列表（PRD 拍板） ----------
+  // ---------- 游戏名下拉：预设起点列表（PRD 拍板；重建以防重试重复追加） ----------
   function buildGameFilterOptions() {
     if (!gameFilter) return;
+    gameFilter.innerHTML = '<option value="">游戏名：全部</option>';
     GAME_PRESETS.forEach(function (g) {
       var opt = document.createElement('option');
       opt.value = g;
@@ -82,6 +89,7 @@ var ENGINE_TAGS = ['Unity', 'UE', '贴图'];
   // ---------- 特效类型下拉：聚合当前分区作品标签（无预设，按需出现） ----------
   function buildTypeFilterOptions() {
     if (!typeFilter) return;
+    typeFilter.innerHTML = '<option value="">特效类型：全部</option>';
     var seen = {};
     var options = [];
     sectionWorks.forEach(function (w) {
@@ -109,13 +117,57 @@ var ENGINE_TAGS = ['Unity', 'UE', '贴图'];
     if (typeFilter) typeFilter.addEventListener('change', render);
   }
 
-  // ---------- 渲染 ----------
+  // ---------- 四态渲染 ----------
   function render() {
+    if (state.status === 'loading') { renderLoading(); return; }
+    if (state.status === 'error') { renderError(); return; }
     var list = getFilteredWorks();
-    if (list.length === 0) {
-      wall.innerHTML = '<p class="empty-hint">没有找到相关结果</p>';
-      return;
-    }
+    if (list.length === 0) { renderEmpty(); return; }
+    renderGrid(list);
+  }
+
+  function renderLoading() {
+    wall.classList.remove('wall--status');
+    var sk = '';
+    for (var i = 0; i < 6; i++) sk += '<div class="skeleton-card" aria-hidden="true"></div>';
+    wall.innerHTML = sk;
+  }
+
+  function renderError() {
+    wall.classList.add('wall--status');
+    wall.innerHTML =
+      '<div class="status status--error">' +
+        '<div class="status__box">' +
+          '<p class="status__title">作品加载失败</p>' +
+          '<p class="status__desc">网络异常或服务暂时不可用，请稍后重试</p>' +
+          '<button id="retryBtn" type="button" class="btn btn--primary">重试</button>' +
+        '</div>' +
+      '</div>';
+    var rb = document.getElementById('retryBtn');
+    if (rb) rb.addEventListener('click', load);
+  }
+
+  function renderEmpty() {
+    wall.classList.add('wall--status');
+    wall.innerHTML =
+      '<div class="status status--empty">' +
+        '<div class="status__box">' +
+          '<p class="status__title">没有符合条件的作品</p>' +
+          '<p class="status__desc">试着清除搜索或筛选条件</p>' +
+          '<button id="clearBtn" type="button" class="btn btn--ghost">清除筛选</button>' +
+        '</div>' +
+      '</div>';
+    var cb = document.getElementById('clearBtn');
+    if (cb) cb.addEventListener('click', function () {
+      if (searchInput) searchInput.value = '';
+      if (gameFilter) gameFilter.value = '';
+      if (typeFilter) typeFilter.value = '';
+      render();
+    });
+  }
+
+  function renderGrid(list) {
+    wall.classList.remove('wall--status');
     wall.innerHTML = list.map(function (w) {
       var thumb = w.imageFile || w.coverUrl || '';
       return (
@@ -129,6 +181,9 @@ var ENGINE_TAGS = ['Unity', 'UE', '贴图'];
       );
     }).join('');
   }
+
+  bindEvents();
+  load();
 })();
 
 // 工具：转义 HTML 文本（防 XSS / 显示异常）

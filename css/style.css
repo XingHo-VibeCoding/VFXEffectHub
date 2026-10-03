@@ -151,6 +151,8 @@ a:hover { text-decoration: underline; }
   gap: 16px;
   min-height: 200px;
 }
+/* 状态框（加载/空/错误）塞进 .wall 时，退出 grid 让它正常居中（Day 13） */
+.wall--status { display: block; }
 .empty-hint {
   grid-column: 1 / -1;
   text-align: center;
